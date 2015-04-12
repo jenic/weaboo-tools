@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 use strict;
 
-while (<>) {
+my @files = ( @ARGV ) ? @ARGV : <STDIN>;
+for (@files) {
     chomp();
     if(/\[.*?\]\s?([A-z0-9!\s-]+)\s-\s?/) {
         my $dir = $1;
