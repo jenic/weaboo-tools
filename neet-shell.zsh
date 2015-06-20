@@ -33,10 +33,17 @@ xdccq() {
     else
         H=$3
     fi
+
     # Relying on BOT global cuz lots of stuff is using it now
     B=`echo -n $BOT | urlencode`
-    ffget -q -O - http://$H/search.php"?nick=$B" | grep -i $1 | \
-        awk -F, '{split($2,a,":"); print a[2], $4}'
+
+    if [[ -z $DEBUG ]]; then
+        ffget -q -O - http://$H/search.php"?nick=$B" | grep -i $1 | \
+            awk -F, '{split($2,a,":"); print a[2], $4}'
+    else
+        ffget -O - http://$H/search.php"?nick=$B"
+    fi
+
 }
 
 # HTML based
