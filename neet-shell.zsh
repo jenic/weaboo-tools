@@ -1,8 +1,5 @@
 canhas() {
-    if [[ -z "$FILE" ]];
-    then
-        FILE="$HOME/Documents/Data/current_weaboos"
-    fi
+    [ -z "$FILE" ] && FILE="$HOME/Documents/Data/current_weaboos"
 
     if [[ -z $@ ]]; then
         cat "$FILE"
@@ -27,12 +24,7 @@ canhas() {
 
 # This works for all XDCC lists powered by "XDCC Parser"
 xdccq() {
-    if [[ -z $2 ]]; then
-        #H='xdcc.utw.me'
-        H='xdcc.horriblesubs.info'
-    else
-        H=$3
-    fi
+    [ -z $2 ] && H='xdcc.horriblesubs.info' || H=$3
 
     # Relying on BOT global cuz lots of stuff is using it now
     B=`echo -n $BOT | urlencode`
@@ -48,17 +40,8 @@ xdccq() {
 
 # HTML based
 csbots() {
-    if [[ -z $2 ]]; then
-        H='tori.aoi-chan.com'
-    else
-        H=$2
-    fi
-
-    if [[ -z $3 ]]; then
-        P='80'
-    else
-        P=$3
-    fi
+    [ -z $2 ] && H='tori.aoi-chan.com' || H=$2
+    [ -z $3 ] && P='80' || P=$3
 
     if [[ -z $4 ]]; then
         lynx -dump "http://$H:$P" | grep -i "$1" | less
@@ -69,22 +52,14 @@ csbots() {
 }
 
 weaboorename() {
-    if [[ -z $1 ]]; then
-        RX='s/.*(_|\s)(\d+)v?\d?\1.*/$2.mkv/'
-    else
-        RX="$1"
-    fi
+    [ -z $1 ] && RX='s/.*(_|\s)(\d+)v?\d?\1.*/$2.mkv/' || RX="$1"
 
     rename -n "$RX" *.mkv && read && rename "$RX" *.mkv
     ls
 }
 
 watbot() {
-    if [[ -z $1 ]]; then
-        H='xdcc.horriblesubs.info'
-    else
-        H="$1"
-    fi
+    [ -z $1 ] && H='xdcc.horriblesubs.info' || H=$1
 
     ffget http://$H/ -q -O - | \
         grep p.nickPacks | \
