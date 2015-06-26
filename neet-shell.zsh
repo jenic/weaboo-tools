@@ -1,3 +1,5 @@
+alias weabformat="cut -d ' ' -f 1 | tr '\n' ' '"
+
 canhas() {
     [ -z "$FILE" ] && FILE="$HOME/Documents/Data/current_weaboos"
 
